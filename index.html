@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Messi's Winning Career</title>
+    <style>
+        body {
+            background-color: #2a2a72;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 100px;
+        }
+        ul {
+            list-style-type: none;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            color: #ffdd59;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+		img {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Messi's Career</h1>
+	 <img src="https://sm.mashable.com/t/mashable_me/photo/default/untitled-design-2022-12-21t123216203_mdvs.1248.png" alt="Messi celebrating with the world cup trophy">
+    </div>
+    <ul id="team-list"></ul>
+
+    <script>
+        fetch("http://157.230.214.215/api/messi_teams")
+            .then(response => response.json())
+            .then(data => {
+                const teamList = document.getElementById("team-list");
+                data.forEach(team => {
+                    const listItem = document.createElement("li");
+                    const link = document.createElement("a");
+                    link.href = `detail.html?id=${team.id}`;
+                    link.textContent = `${team.team}`;
+                    listItem.appendChild(link);
+                    teamList.appendChild(listItem);
+                });
+            })
+    </script>
+</body>
+</html>

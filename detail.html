@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>Messi's Teams Details</title>
+    <style>
+        body {
+            background-color: #ffdd59;
+            color: #2a2a72;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 100px;
+        }
+        img {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Team Details</h1>
+    <div id="team-details"></div>
+    <a href="index.html">Go Back to Teams</a>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const teamId = params.get("id");
+
+        if (teamId) {
+            fetch(`http://157.230.214.215/api/messi_teams/${teamId}`)
+                .then(response => response.json())
+                .then(team => {
+                    const detailsDiv = document.getElementById("team-details");
+
+                    if (team.image_url) {
+                        const img = document.createElement("img");
+                        img.src = team.image_url;
+                        img.alt = team.team;
+                        detailsDiv.appendChild(img);
+                    }
+
+                    const details = [
+                        `Team: ${team.team}`,
+                        `Seasons Played: ${team.seasons_played}`,
+                        `Titles Won: ${team.titles_won}`
+                    ];
+
+                    details.forEach(detail => {
+                        const paragraph = document.createElement("p");
+                        paragraph.textContent = detail;
+                        detailsDiv.appendChild(paragraph);
+                    });
+                })
+        } else {
+            document.getElementById("team-details").innerHTML = "<p>No team ID provided.</p>";
+        }
+    </script>
+</body>
+</html>
